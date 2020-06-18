@@ -2,7 +2,7 @@
 
 Flask api and the code to retrain the model, which requires data, both extracted out of SIA and some dumps out of old systems. For data, contact: m.sukel@amsterdam.nl
 
-To retrain, use the classification/ML cmd line tool.
+To retrain, use the classification/ML[classification/ML](https://github.com/Signalen/classification/) cmd line tool.
 
 # installation
 ```
