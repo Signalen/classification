@@ -4,6 +4,13 @@ Flask api and the code to retrain the model, which requires data, both extracted
 
 To retrain, use the classification/ML cmd line tool.
 
+# installation
+```
+pip install -r requirements.txt
+```
+
+# running service
+
 To load new model into flask, copy main_model.pkl, sub_model.pkl, sub_slugs.pkl and main_slugs.pkl to flask_demo and run docker-compose build.
 
 To activate the flask api run docker-compose up -d.
