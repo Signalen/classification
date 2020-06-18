@@ -28,9 +28,9 @@ To train Middle and Sub categoeries use:
 python train.py --csv file.csv --columns Middle,Sub
 ```
 
-To train Main category use:
+To train Middle category use:
 ```
-python train.py --csv file.csv --columns Main
+python train.py --csv file.csv --columns Middle
 ```
 
 Rename resulting files to "main_model.pkl, sub_model.pkl, main_slugs.pkl, sub_slugs.pkl"
