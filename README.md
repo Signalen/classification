@@ -2,11 +2,15 @@
 
 Flask api and the code to retrain the model, which requires data, both extracted out of SIA and some dumps out of old systems. For data, contact: m.sukel@amsterdam.nl
 
-# installation
+# installation (ML train tool)
+```
+pip install -r requirements-train.txt
+```
+
+# installation (flask)
 ```
 pip install -r requirements.txt
 ```
-
 
 # input data
 

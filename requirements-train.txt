@@ -1,7 +1,10 @@
+asgiref==3.2.10
 astroid==2.4.2
 attrs==19.3.0
 click==7.1.2
+cycler==0.10.0
 dill==0.3.2
+Django==3.0.7
 Flask==1.1.2
 Flask-Cors==3.0.8
 gunicorn==20.0.4
@@ -9,8 +12,10 @@ isort==4.3.21
 itsdangerous==1.1.0
 Jinja2==2.11.2
 joblib==0.15.1
+kiwisolver==1.2.0
 lazy-object-proxy==1.4.3
 MarkupSafe==1.1.1
+matplotlib==3.2.2
 mccabe==0.6.1
 more-itertools==8.4.0
 nltk==3.5
@@ -29,6 +34,7 @@ scikit-learn==0.23.1
 scipy==1.4.1
 six==1.15.0
 sklearn==0.0
+sqlparse==0.3.1
 threadpoolctl==2.1.0
 toml==0.10.1
 tqdm==4.46.1
