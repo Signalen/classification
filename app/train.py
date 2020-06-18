@@ -7,8 +7,8 @@ def parse_args():
     optional = parser._action_groups.pop() 
     required = parser.add_argument_group('required arguments')
     required.add_argument('--csv', required=True)
+    optional.add_argument('--columns', default='')
     optional.add_argument('--fract', default=1.0, type=float)
-    optional.add_argument('--skip-main-category', const=True, nargs="?", default=False, type=bool)
     optional.add_argument('--output-validation', const=True, nargs="?", default=False, type=bool)
     parser._action_groups.append(optional)
     return parser.parse_args()
@@ -51,9 +51,7 @@ if __name__ == '__main__':
     else:
         print("{} rows loaded".format(len(df)))
     texts, labels, train_texts, train_labels, test_texts, test_labels = classifier.make_data_sets(df)
-
+    columns = args.columns or 'Main'
+    print("Training using category column(s): {}".format(columns))
     # train sub cat
-    train(df, ['Middle','Sub'], args.output_validation)
-    if not args.skip_main_category:
-        # train main cat
-        train(df, ['Middle'], args.output_validation)
+    train(df, columns.split(','), args.output_validation)

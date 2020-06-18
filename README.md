@@ -21,15 +21,18 @@ csv input file with at least the following columns:
 
 # training model
 navigate to [app folder](https://github.com/Signalen/classification-endpoint/tree/master/app)
-See python train.py for all options. Currently The tool trains for lowest 2 categories. 
-| category  | column (combination) |
-| ------------- | ------------- |
-| Main  | Middle  |
-| Sub  | Middle, Sub |
+See python train.py for all options. 
 
+To train Middle and Sub categoeries use:
 ```
-python train.py --csv file.csv
+python train.py --csv file.csv --columns Middle,Sub
 ```
+
+To train Main category use:
+```
+python train.py --csv file.csv --columns Main
+```
+
 Rename resulting files to "main_model.pkl, sub_model.pkl, main_slugs.pkl, sub_slugs.pkl"
 
 # running service
