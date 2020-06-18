@@ -10,6 +10,7 @@ pip install -r requirements.txt
 ```
 
 # training model
+navigate to [app folder](https://github.com/Signalen/classification-endpoint/tree/master/app)
 See python train.py for all options
 ```
 python train.py --csv file.csv
