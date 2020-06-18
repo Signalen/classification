@@ -12,10 +12,13 @@ pip install -r requirements.txt
 # running service
 
 To load new model into flask (copy into app folder)
-main_model.pkl - model for main category 
-sub_model.pkl - model for sub category
-main_slugs.pkl - slugs for main category
-sub_slugs.pkl - slugs for sub category
+| file  | description |
+| ------------- | ------------- |
+| main_model.pkl  | model for main category |
+| sub_model.pkl  | model for sub category |
+| main_slugs.pkl | slugs for main category |
+| sub_slugs.pkl | slugs for sub category  |
+
 ```
 run docker-compose build
 ```
