@@ -9,6 +9,13 @@ To retrain, use the [classification/ML](https://github.com/Signalen/classificati
 pip install -r requirements.txt
 ```
 
+# training model
+See python train.py for all options
+```
+python train.py --csv file.csv
+```
+Rename resulting files to "main_model.pkl, sub_model.pkl, main_slugs.pkl, sub_slugs.pkl"
+
 # running service
 
 To load new model into flask (copy into app folder)
