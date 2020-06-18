@@ -11,8 +11,18 @@ pip install -r requirements.txt
 
 # running service
 
-To load new model into flask, copy main_model.pkl, sub_model.pkl, sub_slugs.pkl and main_slugs.pkl to flask_demo and run docker-compose build.
+To load new model into flask (copy into app folder)
+main_model.pkl - model for main category 
+sub_model.pkl - model for sub category
+main_slugs.pkl - slugs for main category
+sub_slugs.pkl - slugs for sub category
+```
+run docker-compose build
+```
 
-To activate the flask api run docker-compose up -d.
+To activate the flask api run:
+```
+docker-compose up -d
+```
 
 To test the current loaded model, open web_pages/index.html or POST "text" to http://localhost:8140/signals_mltool/predict with the flask app running.
