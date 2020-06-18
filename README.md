@@ -7,7 +7,8 @@ Flask api and the code to retrain the model, which requires data, both extracted
 pip install -r requirements-train.txt
 ```
 
-# installation (flask)
+# installation
+Use the requirements.txt to run (flask) endpoint locally. This step can be skipped if you are using the docker container.
 ```
 pip install -r requirements.txt
 ```
