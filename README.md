@@ -2,12 +2,22 @@
 
 Flask api and the code to retrain the model, which requires data, both extracted out of SIA and some dumps out of old systems. For data, contact: m.sukel@amsterdam.nl
 
-To retrain, use the [classification/ML](https://github.com/Signalen/classification/) cmd line tool.
-
 # installation
 ```
 pip install -r requirements.txt
 ```
+
+
+# input data
+
+csv input file with at least the following columns:
+| column  | description |
+| ------------- | ------------- |
+| Main  | Main category  |
+| Middle  | Middle category  |
+| Sub  | Sub category  |
+| Text  | message  |
+
 
 # training model
 navigate to [app folder](https://github.com/Signalen/classification-endpoint/tree/master/app)
