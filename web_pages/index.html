@@ -27,7 +27,7 @@ function addData(){// pass your data in method
 
      $.ajax({
              type: "POST",
-             url: "http://localhost:5000/signals_mltool/predict",//"http://localhost:8140/signals_mltool/predict", //
+             url: "http://localhost:8140/signals_mltool/predict",//"http://localhost:8140/signals_mltool/predict", //
              data: JSON.stringify(data),// now data come in this function
              contentType: "application/json; charset=utf-8",
              crossDomain: true,
