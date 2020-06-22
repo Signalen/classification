@@ -51,7 +51,7 @@ class TextClassifier:
 
 
     def load_data(self, csv_file, frac=1):
-        df = pd.read_csv(csv_file, engine='python')
+        df = pd.read_csv(csv_file, sep=None, engine='python')
         df = df.dropna(
             axis=0, how='any',
             thresh=None,
