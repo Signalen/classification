@@ -4,7 +4,7 @@ import os
 import logging
 import warnings
 
-from settings import SIGNALS_URL
+from settings import SIGNALS_CATEGORY_URL
 
 
 warnings.filterwarnings("ignore",category=DeprecationWarning)
@@ -67,7 +67,7 @@ class MoraCategoryClassifier:
         a = self.main_cat.predict_proba([zin])
         probs = list(reversed(sorted(a[0])))
         
-        cats = ["{prefix}{cat}".format(prefix=SIGNALS_URL, cat=self.categories[z]) for z in list(reversed(np.argsort(a)[::-1][0][-100:]))]
+        cats = ["{prefix}{cat}".format(prefix=SIGNALS_CATEGORY_URL, cat=self.categories[z]) for z in list(reversed(np.argsort(a)[::-1][0][-100:]))]
         
         return cats, probs
 
@@ -90,7 +90,7 @@ class MoraCategoryClassifier:
         '''
         a = self.sub_cat.predict_proba([zin])
         probs = list(reversed(sorted(a[0])))
-        cats = ["{prefix}{cat}".format(prefix=SIGNALS_URL, cat=self.sub_categories[z]) for z in list(reversed(np.argsort(a)[::-1][0][-100:]))]
+        cats = ["{prefix}{cat}".format(prefix=SIGNALS_CATEGORY_URL, cat=self.sub_categories[z]) for z in list(reversed(np.argsort(a)[::-1][0][-100:]))]
       
 
         return cats, probs
