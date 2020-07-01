@@ -8,23 +8,25 @@ def parse_args():
     required = parser.add_argument_group('required arguments')
     required.add_argument('--csv', required=True)
     optional.add_argument('--columns', default='')
+    optional.add_argument('--ml-prefix', default='https://api.data.amsterdam.nl/signals/v1/public/terms/categories')
     optional.add_argument('--fract', default=1.0, type=float)
     optional.add_argument('--output-validation', const=True, nargs="?", default=False, type=bool)
     parser._action_groups.append(optional)
     return parser.parse_args()
 
-def train(df, columns, output_validation=False):
+def train(df, columns, prefix, output_validation=False):
     texts, labels, train_texts, train_labels, test_texts, test_labels = classifier.make_data_sets(df, columns=columns)
     colnames = "_".join(columns)
+    df.to_csv("{}_dl.csv".format(colnames), mode='w', columns=['Text','Label'], index=False)
     print("Training... for columns: {colnames}".format(colnames=colnames))
     model = classifier.fit(train_texts, train_labels)
     print("Serializing model to disk...")
     classifier.export_model("{file}_model.pkl".format(file=colnames))
     if len(columns) > 1:
         cats = [x.split('|') for x in model.classes_] 
-        slugs = ["/categories/{main}/sub_categories/{sub}".format(main=slugify(x[0]), sub=slugify(x[1])) for x in cats]
+        slugs = ["{prefix}/categories/{main}/sub_categories/{sub}".format(prefix=prefix, main=slugify(x[0]), sub=slugify(x[1])) for x in cats]
     else:
-        slugs = ["/categories/{}".format(slugify(x)) for x in model.classes_]
+        slugs = ["{prefix}/categories/{main}".format(prefix=prefix, main=slugify(x)) for x in model.classes_]
     classifier.pickle(slugs, "{file}_labels.pkl".format(file=colnames))
     
     print("Validating model")
@@ -54,4 +56,4 @@ if __name__ == '__main__':
     columns = args.columns or 'Main'
     print("Training using category column(s): {}".format(columns))
     # train sub cat
-    train(df, columns.split(','), args.output_validation)
+    train(df, columns.split(','), args.ml_prefix, args.output_validation)
