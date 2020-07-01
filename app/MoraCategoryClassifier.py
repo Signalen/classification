@@ -4,8 +4,7 @@ import os
 import logging
 import warnings
 
-from settings import SIGNALS_CATEGORY_URL
-
+from settings import SIGNALS_CATEGORY_URL, MODELS_DIRECTORY
 
 warnings.filterwarnings("ignore",category=DeprecationWarning)
 class MoraCategoryClassifier:
@@ -19,14 +18,11 @@ class MoraCategoryClassifier:
     """
 
     def __init__(self):
-        
-        curScriptPath = os.path.dirname(os.path.abspath(__file__)) # needed to keep track of the current location of current script ( although it is included somewhere else )
+        self.main_cat = joblib.load(os.path.join(MODELS_DIRECTORY, 'main_model.pkl'))
+        self.categories = joblib.load(os.path.join(MODELS_DIRECTORY, 'main_slugs.pkl'))
 
-        self.main_cat = joblib.load(curScriptPath + '/' + 'main_model.pkl') 
-        self.categories = joblib.load(curScriptPath + '/' + 'main_slugs.pkl') 
-
-        self.sub_cat = joblib.load(curScriptPath + '/' + 'sub_model.pkl') 
-        self.sub_categories = joblib.load(curScriptPath + '/' + 'sub_slugs.pkl') 
+        self.sub_cat = joblib.load(os.path.join(MODELS_DIRECTORY, 'sub_model.pkl'))
+        self.sub_categories = joblib.load(os.path.join(MODELS_DIRECTORY, 'sub_slugs.pkl'))
         
         self.createLogger()
         self.logger.info("MoraCategoryClassifier: Init")
