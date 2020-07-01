@@ -1,0 +1,20 @@
+name: Build and push to Docker Hub
+on: [push, pull_request]
+
+jobs:
+  classification:
+    name: Classification
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Docker login
+        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+      - name: Docker build and push
+        run: |
+          docker build -t signalen/classification:$GITHUB_SHA .
+          docker build -t signalen/classification:latest .
+          docker push signalen/classification:$GITHUB_SHA
+          docker push signalen/classification:latest
