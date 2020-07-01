@@ -4,6 +4,9 @@ import os
 import logging
 import warnings
 
+from settings import SIGNALS_URL
+
+
 warnings.filterwarnings("ignore",category=DeprecationWarning)
 class MoraCategoryClassifier:
     
@@ -43,7 +46,7 @@ class MoraCategoryClassifier:
         self.logger.addHandler(handler)
 
     # ----
-    
+
     def classifyCategoryWithProbability(self,zin):
         '''
         input string, returns best category, and probability
@@ -64,7 +67,7 @@ class MoraCategoryClassifier:
         a = self.main_cat.predict_proba([zin])
         probs = list(reversed(sorted(a[0])))
         
-        cats = [self.categories[z] for z in list(reversed(np.argsort(a)[::-1][0][-100:]))]
+        cats = ["{prefix}{cat}".format(prefix=SIGNALS_URL, cat=self.categories[z]) for z in list(reversed(np.argsort(a)[::-1][0][-100:]))]
         
         return cats, probs
 
@@ -87,7 +90,7 @@ class MoraCategoryClassifier:
         '''
         a = self.sub_cat.predict_proba([zin])
         probs = list(reversed(sorted(a[0])))
-        cats = [self.sub_categories[z] for z in list(reversed(np.argsort(a)[::-1][0][-100:]))]
+        cats = ["{prefix}{cat}".format(prefix=SIGNALS_URL, cat=self.sub_categories[z]) for z in list(reversed(np.argsort(a)[::-1][0][-100:]))]
       
 
         return cats, probs
