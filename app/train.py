@@ -23,7 +23,7 @@ def generate_category(name, pk, fk):
             "parent": fk,
             "slug": slugify(name),
             "name": name,
-            "handling": None,
+            "handling": 'REST',
             "handling_message": None,
             "is_active": True,
             "description": None
@@ -32,14 +32,22 @@ def generate_category(name, pk, fk):
 
 def generate_fixtures(categories):
     cats = {}
-    idx = 1
+    idx = 9991
+
+    # add global overig
+    categories.append(['overig', 'overig'])
 
     # process parents first
     for cat in categories:
         slug = slugify(cat[0])
         if not slug in cats:
-            cats[slug] = generate_category(cat[0], idx, None)
+            parent = generate_category(cat[0], idx, None)
+            cats[slug] = parent
             idx = idx + 1
+            # generate overig
+            if slug != 'overig':
+                cats["{}|Overig".format(slug)] = generate_category("Overig {}".format(cat[0]), idx, parent["pk"])
+                idx = idx + 1
 
     # process childs
     for cat in categories:
