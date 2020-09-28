@@ -21,7 +21,8 @@ def generate_category(name, pk, fk, parent_name=None):
         "pk": pk,
         "fields": {
             "parent": fk,
-            "slug": slugify(name if not parent_name else "{main}-{sub}".format(main=parent_name, sub=name)),
+            #"slug": slugify(name if not parent_name else "{main}-{sub}".format(main=parent_name, sub=name)),
+            "slug": slugify(name),
             "name": name,
             "handling": 'REST',
             "handling_message": None,
@@ -55,7 +56,7 @@ def generate_fixtures(categories):
         slug = "{main}|{sub}".format(main=parent_slug, sub=slugify(cat[1]))
         if not slug in cats:
             parent = cats[parent_slug]
-            cats[slug] = generate_category(cat[0], idx, parent["pk"], cat[1])
+            cats[slug] = generate_category(cat[1], idx, parent["pk"], cat[0])
             idx = idx + 1
 
     return cats.values()
@@ -70,7 +71,8 @@ def train(df, columns, output_validation=False, output_fixtures=True):
     classifier.export_model("{file}_model.pkl".format(file=colnames))
     if len(columns) > 1:
         cats = [x.split('|') for x in model.classes_] 
-        slugs = ["/categories/{main}/sub_categories/{main}-{sub}".format(main=slugify(x[0]), sub=slugify(x[1])) for x in cats]
+        # slugs = ["/categories/{main}/sub_categories/{main}-{sub}".format(main=slugify(x[0]), sub=slugify(x[1])) for x in cats]
+        slugs = ["/categories/{main}/sub_categories/{sub}".format(main=slugify(x[0]), sub=slugify(x[1])) for x in cats]
         if output_fixtures:
             fixtures = generate_fixtures(cats)
             with open("{file}_fixtures.json".format(file=colnames), 'w') as outfile:
