@@ -15,14 +15,14 @@ def parse_args():
     parser._action_groups.append(optional)
     return parser.parse_args()
 
-def generate_category(name, pk, fk, parent_name=None):
+def generate_category(slug, name, pk, fk, parent_name=None):
     return {
         "model": "signals.category",
         "pk": pk,
         "fields": {
             "parent": fk,
             #"slug": slugify(name if not parent_name else "{main}-{sub}".format(main=parent_name, sub=name)),
-            "slug": slugify(name),
+            "slug": slugify(slug),
             "name": name,
             "handling": 'REST',
             "handling_message": None,
@@ -42,12 +42,16 @@ def generate_fixtures(categories):
     for cat in categories:
         slug = slugify(cat[0])
         if not slug in cats:
-            parent = generate_category(cat[0], idx, None)
+            parent = generate_category(slug=cat[0], name=cat[0], pk=idx, fk=None)
             cats[slug] = parent
             idx = idx + 1
             # generate overig
             if slug != 'overig':
-                cats["{}|Overig".format(slug)] = generate_category("Overig {}".format(cat[0]), idx, parent["pk"])
+                cats["{}|Overig".format(slug)] = generate_category(
+                    slug="overig",
+                    name="Overig {}".format(cat[0]),
+                    pk=idx,
+                    fk=parent["pk"])
                 idx = idx + 1
 
     # process childs
@@ -56,7 +60,7 @@ def generate_fixtures(categories):
         slug = "{main}|{sub}".format(main=parent_slug, sub=slugify(cat[1]))
         if not slug in cats:
             parent = cats[parent_slug]
-            cats[slug] = generate_category(cat[1], idx, parent["pk"], cat[0])
+            cats[slug] = generate_category(slug=cat[1], name=cat[1], pk=idx, fk=parent["pk"], parent_name=cat[0])
             idx = idx + 1
 
     return cats.values()
