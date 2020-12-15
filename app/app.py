@@ -26,6 +26,10 @@ def predict():
     pred_hoofdrubriek = ml_models.classifyAllCategoriesWithProbability(query)
     pred_subrubriek = ml_models.classifyAllSubCategoriesWithProbability(query)
 
+    # return bad request if we are configured incorrectly
+    if not pred_hoofdrubriek or not pred_subrubriek:
+        return jsonify({'errors': 'Misconfigured ML endpoint'}), 400
+
     return jsonify({'hoofdrubriek': list(pred_hoofdrubriek),
                     'subrubriek': list(pred_subrubriek)})
 

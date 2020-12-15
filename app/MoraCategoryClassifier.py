@@ -18,15 +18,19 @@ class MoraCategoryClassifier:
     """
 
     def __init__(self):
-        self.main_cat = joblib.load(os.path.join(MODELS_DIRECTORY, 'main_model.pkl'))
-        self.categories = joblib.load(os.path.join(MODELS_DIRECTORY, 'main_slugs.pkl'))
-
-        self.sub_cat = joblib.load(os.path.join(MODELS_DIRECTORY, 'sub_model.pkl'))
-        self.sub_categories = joblib.load(os.path.join(MODELS_DIRECTORY, 'sub_slugs.pkl'))
-        
         self.createLogger()
         self.logger.info("MoraCategoryClassifier: Init")
-        
+        self.has_valid_models = False
+        try:
+            self.main_cat = joblib.load(os.path.join(MODELS_DIRECTORY, 'main_model.pkl'))
+            self.categories = joblib.load(os.path.join(MODELS_DIRECTORY, 'main_slugs.pkl'))
+
+            self.sub_cat = joblib.load(os.path.join(MODELS_DIRECTORY, 'sub_model.pkl'))
+            self.sub_categories = joblib.load(os.path.join(MODELS_DIRECTORY, 'sub_slugs.pkl'))
+            self.has_valid_models = True
+        except FileNotFoundError as ex:
+            self.logger.warn("Faild to init ML model: {}".format(str(ex)))
+
     # ----
     
     def createLogger(self):
@@ -59,6 +63,8 @@ class MoraCategoryClassifier:
         '''
         input string, returns all category and probability
         '''
+        if not self.has_valid_models:
+            return None
 
         a = self.main_cat.predict_proba([zin])
         probs = list(reversed(sorted(a[0])))
@@ -84,6 +90,9 @@ class MoraCategoryClassifier:
         '''
         input string, returns all subcategory and probability
         '''
+        if not self.has_valid_models:
+            return None
+
         a = self.sub_cat.predict_proba([zin])
         probs = list(reversed(sorted(a[0])))
         cats = ["{prefix}{cat}".format(prefix=SIGNALS_CATEGORY_URL, cat=self.sub_categories[z]) for z in list(reversed(np.argsort(a)[::-1][0][-100:]))]
