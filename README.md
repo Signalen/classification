@@ -32,6 +32,10 @@ To train Middle and Sub categoeries use:
 ```
 python train.py --csv file.csv --columns Middle,Sub
 ```
+This step will generate a categories `json` file. Use this file to load the categories in the backend.
+```
+python manage.py load_categories <file.json>
+```
 
 To train Middle category use:
 ```
