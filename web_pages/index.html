@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://meldingen.amsterdam.nl/incident/beschrijf -->
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="manifest" href="https://meldingen.amsterdam.nl/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="react boilerplate">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://meldingen.amsterdam.nl/icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://meldingen.amsterdam.nl/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="https://meldingen.amsterdam.nl/icon-167x167.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://meldingen.amsterdam.nl/icon-180x180.png">
+            <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+    <link rel="icon" href="https://meldingen.amsterdam.nl/favicon.png">
+    <title>SIA - Signalen Informatievoorziening Amsterdam</title>
+
+<script>
+
+
+function addData(){// pass your data in method
+ 
+ if ($('#target').val()!=''){
+  var data = {'text':$('#target').val()}
+
+     $.ajax({
+             type: "POST",
+             url: "http://localhost:8140/signals_mltool/predict",//"http://localhost:8140/signals_mltool/predict", //
+             data: JSON.stringify(data),// now data come in this function
+             contentType: "application/json; charset=utf-8",
+             crossDomain: true,
+             dataType: "json",
+             success: function (data, status, jqXHR) {
+              
+                $('.main_data').html('<h2>Hoofdrubriek</h2>')
+                var arrayLength = data['hoofdrubriek'][0].length;
+                for (var i = 0; i < arrayLength; i++) {
+                    var n = i + 1
+                    if ((data['hoofdrubriek'][1][i]*100).toFixed(0)>0) {
+
+                    $('.main_data').append('<p>'+n+'. '+data['hoofdrubriek'][0][i].split('/categories/')[1]+' '+(data['hoofdrubriek'][1][i]*100).toFixed(0)+'%</p>');
+                  }
+                }
+
+                $('.sub_data').html('<h2>Subrubriek</h2>')
+
+                var arrayLength = data['subrubriek'][0].length;
+                for (var i = 0; i < arrayLength; i++) {
+                    var n = i + 1
+                    if ((data['subrubriek'][1][i]*100).toFixed(0)>0)  {
+                    $('.sub_data').append('<p>'+n+'. '+data['subrubriek'][0][i].split('sub_categories/')[1]+' '+(data['subrubriek'][1][i]*100).toFixed(0)+'%</p>');
+                  }
+
+                }
+
+             },
+             error: function (jqXHR, status) {
+                 console.log(jqXHR);
+             }
+          });
+    }
+    else {
+      $('.main_data').html('<h2>Begin met typen..</h2>')
+      $('.sub_data').html('<h2></h2>')
+    }
+  }
+
+$( document ).ready(function() {
+  console.log('test')
+$('#target').on('keyup paste',addData);
+  
+});
+
+</script>
+    <link href="./SIA - Signalen Informatievoorziening Amsterdam_files/main.f4811c57c0b1dd02688342e35a0604ac.css" rel="stylesheet">
+</head>
+
+<body class="with-sidebars">
+    <noscript>If you're seeing this message, that means <strong>JavaScript has been disabled on your browser</strong>, please <strong>enable JS</strong> to make this app work.</noscript>
+    <div id="app">
+        <div class="container app-container">
+            <div></div>
+            <div class="container">
+                <div class="header-component has_header_modern no-print">
+                    <div class="row header-wrapper">
+                        <div class="col-sm-6 grid-header-logo">
+                            <h1 class="sitelogo"><a class="mainlogo" href="https://meldingen.amsterdam.nl/"><span class="logoset"><svg class="screen-logo" alt="Gemeente Amsterdam" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 68"><style>.st0{fill:#ec0000}</style><title>Canvas 1</title><title>Layer 1</title><path class="st0" d="M0 64l6-6-6-6 4-4 6 6 6-6 4 4-6 6 6 6-4 4-6-6-6 6-4-4zM0 16l6-6-6-6 4-4 6 6 6-6 4 4-6 6 6 6-4 4-6-6-6 6-4-4zM0 40l6-6-6-6 4-4 6 6 6-6 4 4-6 6 6 6-4 4-6-6-6 6-4-4z"></path></svg><img src="./SIA - Signalen Informatievoorziening Amsterdam_files/andreas.0082431.png" class="alt-logo" alt="Gemeente Amsterdam"><img src="./SIA - Signalen Informatievoorziening Amsterdam_files/andreas-print.127505e.png" class="print-logo" alt="Gemeente Amsterdam"></span><span class="logotexts"><span class="logotext red">Gemeente</span><span class="logotext red">Amsterdam</span></span></a></h1></div>
+                        <div class="col-sm-6">
+                            <nav>
+                                <ul class="links">
+                                    <li><span><b></b></span></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row main-menu-component no-print">
+                    <div class="container type-nav-primair">
+                        <nav>
+                            <ul class="links horizontal">
+                                <li><a class="active" href=""><span class="linklabel">Demo</span></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+           <div class="content container">
+               <div class="incident-container">
+                  <div class="incident-wizard">
+                     <div>
+                      <h1>Machine learning demonstratie meldingen</h1>
+                      <p>Onderstaand een demonstratie van het classificatiemodel dat wordt gebruikt om te herkennen waar een melding openbare ruimte overgaat.</p>
+                        <h2>Beschrijf uw melding</h2>
+                        <div class="incident-form">
+                           <form>
+                              <div class=""></div>
+                              <div class=""></div>
+                              <div class="row">
+                                 <div class="col-12 mode_input"></div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-12 mode_input">
+                                    <div class="header ">
+                                       <div class="header__label">Waar gaat het om?</div>
+                                       <div class="header__subheader"></div>
+                                       <div class="header__errors">
+                                          <div class="header__errors__item"></div>
+                                          <div class="header__errors__item"></div>
+                                          <div class="header__errors__item"></div>
+                                          <div class="header__errors__item"></div>
+                                       </div>
+                                       <div class="header__children">
+                                          <div class="invoer">
+                                             <textarea rows="6" placeholder="Beschrijf uw melding"  id='target'></textarea>
+                                             <div class="input-help"><span class="text-area-input__counter"></span></div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+<div class="row">
+  <div class="main_data col-sm-6"></div>
+  <div class="sub_data col-sm-6"></div>
+</div>
+                              <div><input type="hidden" value=""></div>
+                              <div><input type="hidden" value=""></div>
+                              <div><input type="hidden" value=""></div>
+                              <div class=""></div>
+                              <div><input type="hidden" value="9"></div>
+                              <div><input type="hidden" value="0"></div>
+                              <div><input type="hidden" value=""></div>
+                              <span>
+                                 <div></div>
+                              </span>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="container-fluid">
+               <div class="footer-wrapper no-print">
+                  <div class="row bg-darkgrey footer">
+                     <footer class="container footer-component">
+                        <div class="row">
+                           <div class="col-12">
+                              <h2>Meer informatie?</h2>
+                              <p>m.sukel@amsterdam.nl</p>
+                           </div>
+                        </div>
+                     </footer>
+                  </div>
+            <div class="container grid-below-footer">
+                <div class="row">
+                    <div class="col-12">
+                        <nav>
+                            <ul class="links horizontal left">
+                                <li><a href="https://www.amsterdam.nl/privacy/"><span class="linklabel">Privacy</span></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</body>
+
+</html>
