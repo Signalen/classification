@@ -15,13 +15,13 @@ joblib==0.15.1
 kiwisolver==1.2.0
 lazy-object-proxy==1.4.3
 MarkupSafe==1.1.1
-matplotlib==3.2.2
+matplotlib
 mccabe==0.6.1
 more-itertools==8.4.0
 nltk==3.5
-numpy==1.18.5
+numpy
 packaging==20.4
-pandas==1.0.4
+pandas
 pluggy==0.13.1
 py==1.8.2
 pylint==2.5.3
@@ -30,8 +30,8 @@ pytest==5.4.3
 python-dateutil==2.8.1
 pytz==2020.1
 regex==2020.6.8
-scikit-learn==0.23.1
-scipy==1.4.1
+scikit-learn
+scipy
 six==1.15.0
 sklearn==0.0
 sqlparse==0.3.1
