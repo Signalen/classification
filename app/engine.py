@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfTransformer, CountVectorizer
 from sklearn.linear_model import LogisticRegression
@@ -79,16 +79,8 @@ class TextClassifier:
         texts = df[self._text]
         labels = df[columns].apply('|'.join, axis=1)
 
-        # Splitting data
-        splitpoint = int(split*len(texts))
-
-        # train data
-        train_texts = texts[:splitpoint]
-        train_labels = labels[:splitpoint]
-
-        # test data
-        test_texts = texts[splitpoint:]
-        test_labels = labels[splitpoint:]
+        train_texts, test_texts, train_labels, test_labels = train_test_split(
+            texts, labels, test_size=1-split, stratify=labels)
 
         return texts, labels, train_texts, train_labels, test_texts, test_labels
 
