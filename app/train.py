@@ -63,6 +63,11 @@ def generate_fixtures(categories):
             cats[slug] = generate_category(slug=cat[1], name=cat[1], pk=idx, fk=parent["pk"], parent_name=cat[0])
             idx = idx + 1
 
+    # validate slug length
+    for cat in cats:
+        if len(cat) >= 50:
+            print("Warning invalid slug {}".format(cat))
+
     return cats.values()
         
 def train(df, columns, output_validation=False, output_fixtures=True):
