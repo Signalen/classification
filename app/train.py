@@ -65,8 +65,9 @@ def generate_fixtures(categories):
 
     # validate slug length
     for cat in cats:
-        if len(cat) >= 50:
-            print("Warning invalid slug {}".format(cat))
+        slug = cats[cat]['fields']['slug']
+        if len(slug) > 50:
+            print("Warning invalid slug: {slug}, length: {length}".format(slug=slug, length=len(slug)))
 
     return cats.values()
         
