@@ -5,6 +5,7 @@ from sklearn.feature_extraction.text import TfidfTransformer, CountVectorizer
 from sklearn.linear_model import LogisticRegression
 from nltk.stem.snowball import DutchStemmer
 import joblib
+import os
 import warnings
 import nltk
 import re
@@ -41,17 +42,27 @@ class TextClassifier:
         joblib.dump(self.model, file) 
 
     def preprocessor(self, text):
+        text = str(text)
         text=text.lower()
-        text=re.sub("\\W"," ",text) # remove special chars
-        
+
         # stem words
         words=re.split("\\s+",text)
         stemmed_words=[self.stemmer.stem(word=word) for word in words]
         return ' '.join(stemmed_words)
 
 
-    def load_data(self, csv_file, frac=1):
-        df = pd.read_csv(csv_file, sep=None, engine='python')
+    def load_data(self, input_file, frac=1):
+        _, extension = os.path.splitext(input_file)
+
+        if extension == '.csv':
+            df = pd.read_csv(input_file, sep=None, engine='python')
+        elif extension == '.xlsx':
+            df = pd.read_excel(input_file)
+        else:
+            raise Exception('Could not read input file. Extension should be .csv or .xlsx')
+
+        print(df)
+
         df = df.dropna(
             axis=0, how='any',
             thresh=None,
@@ -60,16 +71,14 @@ class TextClassifier:
         )
 
         # cleanup dataset
-        df = df.drop_duplicates(subset=[self._text], keep='first')
+        #df = df.drop_duplicates(subset=[self._text], keep='first')
         # for dev use only a subset (for speed purpose)
-        df = df.sample(frac=frac).reset_index(drop=True)
+        #df = df.sample(frac=frac).reset_index(drop=True)
         # construct unique label
         df[self._lbl] = df[self._main] + "|" + df[self._middle] + "|" + df[self._sub]
 
         number_of_examples = df[self._lbl].value_counts().to_frame()
-        df['is_bigger_than_50'] = df[self._lbl].isin(number_of_examples[number_of_examples[self._lbl]>50].index)
-        df['is_bigger_than_50'].value_counts()
-        df = df[df['is_bigger_than_50'] == True]
+
         # The example dataset is not large enough to train a good classification model
         # print(len(self.df),'rows valid')
         return df
