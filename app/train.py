@@ -7,7 +7,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     optional = parser._action_groups.pop() 
     required = parser.add_argument_group('required arguments')
-    required.add_argument('--csv', required=True)
+    required.add_argument('--input-file', required=True)
     optional.add_argument('--columns', default='')
     optional.add_argument('--fract', default=1.0, type=float)
     optional.add_argument('--output-fixtures', const=True, nargs="?", default=True, type=bool)
@@ -70,7 +70,7 @@ def generate_fixtures(categories):
             print("Warning invalid slug: {slug}, length: {length}".format(slug=slug, length=len(slug)))
 
     return cats.values()
-        
+
 def train(df, columns, output_validation=False, output_fixtures=True):
     texts, labels, train_texts, train_labels, test_texts, test_labels = classifier.make_data_sets(df, columns=columns)
     colnames = "_".join(columns)
@@ -108,9 +108,9 @@ if __name__ == '__main__':
     print("Using args: {}".format(args))
 
     classifier = TextClassifier()
-    df = classifier.load_data(csv_file=args.csv, frac=args.fract)
+    df = classifier.load_data(input_file=args.input_file, frac=args.fract)
     if len(df) == 0:
-        print("Failed to load {}".format(args.csv))
+        print("Failed to load {}".format(args.input_file))
         exit(-1)
     else:
         print("{} rows loaded".format(len(df)))
