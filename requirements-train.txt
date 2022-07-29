@@ -12,7 +12,6 @@ isort==4.3.21
 itsdangerous==1.1.0
 Jinja2==2.11.2
 joblib==0.15.1
-kiwisolver==1.2.0
 lazy-object-proxy==1.4.3
 MarkupSafe==1.1.1
 matplotlib
@@ -42,4 +41,3 @@ tqdm==4.46.1
 wcwidth==0.2.4
 Werkzeug==1.0.1
 wrapt==1.12.1
-psutil==5.7.0
