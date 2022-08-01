@@ -44,6 +44,10 @@ python train.py --csv file.csv --columns Middle
 
 Rename resulting files to "main_model.pkl, sub_model.pkl, main_slugs.pkl, sub_slugs.pkl" and copy the pkl files into the classification endpoint.
 
+To validate output use:
+
+python train.py --csv file.csv --columns Middle,Sub --output-validation
+
 # running service
 
 To load new model into flask (copy into app folder)
