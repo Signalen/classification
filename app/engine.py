@@ -128,7 +128,7 @@ class TextClassifier:
                 'vect__ngram_range': ((1, 1),) # (1,2)
         }
 
-        grid_search = GridSearchCV(pipeline, parameters_slow,verbose=True,n_jobs=psutil.cpu_count(logical=False),cv=5)
+        grid_search = GridSearchCV(pipeline, parameters_slow,verbose=True,n_jobs=1,cv=5)
         grid_search.fit(train_texts, train_labels)
         #print('Best parameters: ')
         #print(grid_search.best_params_)
