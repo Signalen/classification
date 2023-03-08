@@ -21,7 +21,7 @@ nltk==3.5
 numpy
 openpyxl==3.0.10
 packaging==20.4
-pandas
+pandas==1.5.3
 pluggy==0.13.1
 py==1.8.2
 pylint==2.5.3

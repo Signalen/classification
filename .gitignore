@@ -189,3 +189,10 @@ dwh_media/
 *.lock
 *.env
 dex/dex-data/dex.db
+
+# training output files
+*.pkl
+*.xlsx
+*.csv
+*.pdf
+*.json

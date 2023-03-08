@@ -6,11 +6,9 @@ from sklearn.linear_model import LogisticRegression
 from nltk.stem.snowball import DutchStemmer
 import joblib
 import os
-import warnings
 import nltk
 import re
 import csv
-import psutil
 
 class TextClassifier:
     _text = 'Text'
@@ -65,7 +63,6 @@ class TextClassifier:
 
         df = df.dropna(
             axis=0, how='any',
-            thresh=None,
             subset=[self._text, self._main, self._middle, self._sub],
             inplace=False
         )
@@ -88,13 +85,14 @@ class TextClassifier:
         texts = df[self._text]
         labels = df[columns].apply('|'.join, axis=1)
 
+        print(labels.value_counts())
+
         train_texts, test_texts, train_labels, test_labels = train_test_split(
             texts, labels, test_size=1-split, stratify=labels)
 
         return texts, labels, train_texts, train_labels, test_texts, test_labels
 
     def fit(self, train_texts, train_labels):
-        
         pipeline = Pipeline([
                 ('vect', CountVectorizer(preprocessor=self.preprocessor, stop_words=self.stop_words)),
                 ('tfidf', TfidfTransformer()),
