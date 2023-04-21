@@ -34,7 +34,7 @@ scikit-learn==1.0.2
 scipy
 six==1.15.0
 sklearn==0.0
-sqlparse==0.3.1
+sqlparse==0.4.4
 threadpoolctl==2.1.0
 toml==0.10.1
 tqdm==4.46.1
