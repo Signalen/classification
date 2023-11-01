@@ -1,3 +1,5 @@
+This repo is no longer maintained.
+
 # Machine learning tool
 
 Flask api and the code to retrain the model, which requires data, both extracted out of SIA and some dumps out of old systems. For data, contact: m.sukel@amsterdam.nl
