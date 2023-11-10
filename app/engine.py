@@ -52,10 +52,10 @@ class TextClassifier:
 
     def load_data(self, csv_file, frac=1):
         df = pd.read_csv(csv_file, sep=None, engine='python')
+        df.columns = [self._main, self._sub, self._text]
         df = df.dropna(
             axis=0, how='any',
-            thresh=None,
-            subset=[self._text, self._main, self._middle, self._sub],
+            subset=[self._main, self._sub, self._text],
             inplace=False
         )
 
@@ -64,7 +64,7 @@ class TextClassifier:
         # for dev use only a subset (for speed purpose)
         df = df.sample(frac=frac).reset_index(drop=True)
         # construct unique label
-        df[self._lbl] = df[self._main] + "|" + df[self._middle] + "|" + df[self._sub]
+        df[self._lbl] = df[self._main] + "|" + "|" + df[self._sub]
 
         number_of_examples = df[self._lbl].value_counts().to_frame()
         df['is_bigger_than_50'] = df[self._lbl].isin(number_of_examples[number_of_examples[self._lbl]>50].index)
@@ -74,7 +74,8 @@ class TextClassifier:
         # print(len(self.df),'rows valid')
         return df
 
-    def make_data_sets(self, df, split=0.9, columns=['Middle', 'Sub']):
+    def make_data_sets(self, df, split=0.9, columns=None):
+        columns = columns or [self._main, self._sub]
 
         texts = df[self._text]
         labels = df[columns].apply('|'.join, axis=1)

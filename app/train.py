@@ -74,11 +74,11 @@ def generate_fixtures(categories):
 def train(df, columns, output_validation=False, output_fixtures=True):
     texts, labels, train_texts, train_labels, test_texts, test_labels = classifier.make_data_sets(df, columns=columns)
     colnames = "_".join(columns)
-    df.to_csv("{}_dl.csv".format(colnames), mode='w', columns=['Text','Label'], index=False)
+    df.to_csv("/output/{}_dl.csv".format(colnames), mode='w', columns=['Text','Label'], index=False)
     print("Training... for columns: {colnames}".format(colnames=colnames))
     model = classifier.fit(train_texts, train_labels)
     print("Serializing model to disk...")
-    classifier.export_model("{file}_model.pkl".format(file=colnames))
+    classifier.export_model("/output/{file}_model.pkl".format(file=colnames))
     if len(columns) > 1:
         cats = [x.split('|') for x in model.classes_] 
         # slugs = ["/categories/{main}/sub_categories/{main}-{sub}".format(main=slugify(x[0]), sub=slugify(x[1])) for x in cats]
@@ -89,15 +89,15 @@ def train(df, columns, output_validation=False, output_fixtures=True):
                 json.dump(list(fixtures), outfile)
     else:
         slugs = ["/categories/{main}".format(main=slugify(x)) for x in model.classes_]
-    classifier.pickle(slugs, "{file}_labels.pkl".format(file=colnames))
+    classifier.pickle(slugs, "/output/{file}_labels.pkl".format(file=colnames))
     
     print("Validating model")
     test_predict, precision, recall, accuracy = classifier.validate_model(
         test_texts,
         test_labels,
-        "{colnames}-matrix.pdf".format(colnames=colnames),
-        "{colnames}-matrix.csv".format(colnames=colnames),
-        dst_validation = "{colnames}_validation.csv".format(colnames=colnames) if output_validation else None)
+        "/output/{colnames}-matrix.pdf".format(colnames=colnames),
+        "/output/{colnames}-matrix.csv".format(colnames=colnames),
+        dst_validation = "/output/{colnames}_validation.csv".format(colnames=colnames) if output_validation else None)
     print('Precision', precision)
     print('Recall', recall)
     print('Accuracy', accuracy)
