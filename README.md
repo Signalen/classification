@@ -1,32 +1,72 @@
-This repo is no longer maintained.
-
 # Machine learning tool
 
-Flask api and the code to retrain the model, which requires data, both extracted out of SIA and some dumps out of old systems. For data, contact: m.sukel@amsterdam.nl
+Flask api and the code to retrain the model, which requires data, both extracted out of SIA and some dumps out of old systems.
 
 # installation (ML train tool)
+**Deprecated: use docker instead**
+
 ```
 pip install -r requirements-train.txt
 ```
 
 # installation
+**Deprecated: use docker instead**
+
 Use the requirements.txt to run (flask) endpoint locally. This step can be skipped if you are using the docker container.
 ```
 pip install -r requirements.txt
 ```
 
+# Building the Docker images
+Navigate to the root directory and pull the  relevant images and build the services:
+
+```console
+docker-compose pull
+docker-compose build
+```
+
 # input data
 
-csv input file with at least the following columns:
-| column  | description |
-| ------------- | ------------- |
-| Main  | Main category  |
-| Middle  | Middle category  |
-| Sub  | Sub category  |
-| Text  | message  |
+The `CSV` input file must have at least the following columns:
+
+| column      | description   |
+|-------------|---------------|
+| Text        | message       |
+| Main        | Main category |
+| Sub         | Sub category  |
+
+The columns must be in the order `Text,Main,Sub`, no header is required.
+
+
+# Training model using docker compose
+
+To train the model run the following command:
+
+```
+docker-compose run --rm train python train.py --csv=/input/{name of csv file} --columns={name of column}
+```
+
+for example:
+
+```
+docker-compose run --rm train python train.py --csv=/input/dump.csv --columns=Main
+```
+
+The files will be saved in the `ouput` directory.
+
+In the example above this would result in:
+- `/output/Main_model.pkl`
+- `/output/Main_slugs.pkl`
+- `/output/Main_dl.csv`
+- `/output/Main_matrix.csv`
+- `/output/Main_matrix.pdf`
+
+The `pkl` files can be used for the classification endpoint.  
+And the confusion matrix will be available as `pdf` and `csv`.
 
 
 # training model
+
 navigate to [app folder](https://github.com/Signalen/classification-endpoint/tree/master/app)
 See python train.py for all options. 
 
@@ -49,12 +89,13 @@ Rename resulting files to "main_model.pkl, sub_model.pkl, main_slugs.pkl, sub_sl
 # running service
 
 To load new model into flask (copy into app folder)
-| file  | description |
-| ------------- | ------------- |
-| main_model.pkl  | model for main category |
-| sub_model.pkl  | model for sub category |
+
+| file           | description             |
+|----------------|-------------------------|
+| main_model.pkl | model for main category |
+| sub_model.pkl  | model for sub category  |
 | main_slugs.pkl | slugs for main category |
-| sub_slugs.pkl | slugs for sub category  |
+| sub_slugs.pkl  | slugs for sub category  |
 
 ```
 run docker-compose build
