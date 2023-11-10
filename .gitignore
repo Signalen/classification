@@ -184,6 +184,9 @@ notes/
 
 # bind mount should be ignored
 dwh_media/
+input/
+nltk/
+output/
 
 *.pid
 *.lock
