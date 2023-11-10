@@ -5,3 +5,13 @@ services:
     build: .
     ports:
       - "8140:8000"
+
+  train:
+    build:
+      context: .
+      dockerfile: train.dockerfile
+    volumes:
+      - ./app:/app
+      - ./input:/input
+      - ./nltk/data:/nltk/data
+      - ./output:/output
