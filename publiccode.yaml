@@ -1,0 +1,40 @@
+publiccodeYmlVersion: "0.2"
+name: Signalen classification
+url: "https://github.com/Signalen/classification"
+softwareVersion: "1"
+releaseDate: "2021-05-06"
+platforms:
+  - web
+categories:
+  - it-development
+usedBy:
+  - Gemeente Amsterdam
+developmentStatus: development
+softwareType: standalone/Api
+description:
+  nl:
+    localisedName: Signalen backend
+    genericName: Signalen backend
+    shortDescription: >-
+      Flask api and the code to retrain the model, which requires data, both extracted out of SIA and some dumps out of old systems.
+    longDescription: >-
+      Flask api and the code to retrain the model, which requires data, both extracted out of SIA and some dumps out of old systems.
+    documentation: "https://github.com/Signalen/classification/blob/master/README.md"
+    features:
+legal:
+  license: EUPL-1.2
+  mainCopyrightOwner: Signalen
+  repoOwner: Signalen
+maintenance:
+  type: external
+  contacts:
+    - name: Jacco Brouwer
+      email: jacco.brouwer@vng.nl
+localisation:
+  localisationReady: true
+  availableLanguages:
+    - nl
+    - en
+dependsOn:
+  open:
+    - name: signalen/classification
