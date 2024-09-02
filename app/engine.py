@@ -83,7 +83,7 @@ class TextClassifier:
     def make_data_sets(self, df, split=0.9, columns=['Middle', 'Sub']):
 
         texts = df[self._text]
-        labels = df[columns].apply('|'.join, axis=1)
+        labels = df[columns].applymap(lambda x: x.lower().capitalize()).apply('|'.join, axis=1)
 
         print(labels.value_counts())
 
