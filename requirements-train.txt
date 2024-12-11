@@ -39,6 +39,6 @@ threadpoolctl==2.1.0
 toml==0.10.1
 tqdm==4.46.1
 wcwidth==0.2.4
-Werkzeug==1.0.1
+Werkzeug==2.2.3
 wrapt==1.12.1
 psutil==5.7.0
